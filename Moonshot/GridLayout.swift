@@ -16,7 +16,7 @@ struct GridLayout: View {
 
     var body: some View {
         ScrollView {
-            LazyVGrid(columns: columns, spacing: 20) {
+            LazyVGrid(columns: columns, spacing: 10) {
                 ForEach(missions) { mission in
                     NavigationLink {
                         MissionView(
@@ -62,7 +62,6 @@ struct GridLayout: View {
 }
 
 #Preview {
-    let astronauts: [String: Astronaut] = Bundle.main.decode("astronauts.json")
-    let missions: [Mission] = Bundle.main.decode("missions.json")
-    return GridLayout(missions: missions, astronauts: astronauts)
+    @Previewable @State var store = MoonshotDataStore()
+    return GridLayout(missions: store.missions, astronauts: store.astronauts)
 }

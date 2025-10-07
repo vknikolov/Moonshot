@@ -29,7 +29,8 @@ struct AstronautView: View {
 }
 
 #Preview {
-    let astronauts: [String: Astronaut] = Bundle.main.decode("astronauts.json")
-    return AstronautView(astronaut: astronauts["aldrin"]!)
+    @Previewable @State var store = MoonshotDataStore()
+
+    return AstronautView(astronaut: store.astronauts["aldrin"]!)
         .preferredColorScheme(.dark)
 }

@@ -53,13 +53,12 @@ struct MissionCrew: View {
 }
 
 #Preview {
-    let missions: [Mission] = Bundle.main.decode("missions.json")
-    let astronauts: [String: Astronaut] = Bundle.main.decode("astronauts.json")
+    @Previewable @State var store = MoonshotDataStore()
 
-    let mission = missions[0]
+    let mission = store.missions[0]
     
     let crewMembers: [CrewMember] = mission.crew.compactMap { member in
-        guard let astronaut = astronauts[member.name] else { return nil }
+        guard let astronaut = store.astronauts[member.name] else { return nil }
         return CrewMember(role: member.role, astronaut: astronaut)
     }
 

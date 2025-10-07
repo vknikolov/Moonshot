@@ -62,7 +62,6 @@ struct ListLayout: View {
 }
 
 #Preview {
-    let astronauts: [String: Astronaut] = Bundle.main.decode("astronauts.json")
-    let missions: [Mission] = Bundle.main.decode("missions.json")
-    return ListLayout(missions: missions, astronauts: astronauts)
+    @Previewable @State var store = MoonshotDataStore()
+    return ListLayout(missions: store.missions, astronauts: store.astronauts)
 }

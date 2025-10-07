@@ -83,9 +83,8 @@ struct MissionView: View {
 }
 
 #Preview {
-    let missions: [Mission] = Bundle.main.decode("missions.json")
-    let astronauts: [String: Astronaut] = Bundle.main.decode("astronauts.json")
+    @Previewable @State var store = MoonshotDataStore()
 
-    return MissionView(mission: missions[0], astronauts: astronauts)
+    return MissionView(mission: store.missions[0], astronauts: store.astronauts)
         .preferredColorScheme(.dark)
 }

@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    let astronauts: [String: Astronaut] = Bundle.main.decode("astronauts.json")
-    let missions: [Mission] = Bundle.main.decode("missions.json")
+    @State private var store = MoonshotDataStore()
 
     @State private var showingGrid = true
 
@@ -45,13 +44,21 @@ struct ContentView: View {
     private func contentView() -> some View {
         Group {
             if showingGrid {
-                GridLayout(missions: missions, astronauts: astronauts)
-                    .transition(.slide)
+                GridLayout(
+                    missions: store.missions,
+                    astronauts: store.astronauts
+                )
+
             } else {
-                ListLayout(missions: missions, astronauts: astronauts)
-                    .transition(.slide)
+                ListLayout(
+                    missions: store.missions,
+                    astronauts: store.astronauts
+                )
+
             }
+
         }
+        .transition(.slide)
     }
 
 }
