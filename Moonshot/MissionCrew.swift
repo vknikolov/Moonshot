@@ -14,14 +14,12 @@ struct CrewMember {
 
 struct MissionCrew: View {
     let crew: [CrewMember]
-    
+
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack {
                 ForEach(crew, id: \.role) { crewMemebr in
-                    NavigationLink {
-                        AstronautView(astronaut: crewMemebr.astronaut)
-                    } label: {
+                    NavigationLink(value: crewMemebr.astronaut) {
                         HStack {
                             Image(crewMemebr.astronaut.id)
                                 .resizable()
@@ -45,9 +43,13 @@ struct MissionCrew: View {
 
                         }
                         .padding(.horizontal)
+
                     }
                 }
             }
+        }
+        .navigationDestination(for: Astronaut.self) { selectedAstronaut in
+            AstronautView(astronaut: selectedAstronaut)
         }
     }
 }
@@ -56,7 +58,7 @@ struct MissionCrew: View {
     @Previewable @State var store = MoonshotDataStore()
 
     let mission = store.missions[0]
-    
+
     let crewMembers: [CrewMember] = mission.crew.compactMap { member in
         guard let astronaut = store.astronauts[member.name] else { return nil }
         return CrewMember(role: member.role, astronaut: astronaut)
